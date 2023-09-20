@@ -1,0 +1,138 @@
+.fon_walletDialog{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0.25rem;
+    background-image: url(../рages/Kron_Scene_man_reading_a_crystal_ball_inside_of_a_ball_money_an.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 50% 30%;
+    animation: manifested 6s ease-out;
+    overflow: hidden;
+}
+
+.fon_walletcard {
+    min-height: 100vh;
+    padding: 0.25rem;
+    background-image: url(../рages/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS9zdG9yYWdlL3VwbG9hZHMvdmlldy9kYmVkYjdhMGQzN2UyM2Y0NjkxMTY4NDgyNThjNmY0MC5qcGc=.jpg);
+    background-repeat: no-repeat;
+    background-size: cover ;
+    background-attachment: fixed;
+    background-position: 50% 30%;
+    animation: manifested 6s ease-out;
+}
+
+.footer_link a:hover {
+    transform: scale(1.1) translateY(-3px);
+    transition-duration: 0.3s;
+    color: rgb(62, 141, 230);
+}
+
+@media (min-width: 1024px) {
+    .fon_walletDialog{
+       padding: 6rem;
+    }
+    .fon_walletcard {
+       padding: 6rem;
+    }
+}
+
+@keyframes manifested {
+    0% {
+        opacity: 0;
+
+    }
+
+    100% {
+        opacity: 1;
+
+    }
+}
+
+.my_button{
+    position: relative;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 5px 12px;
+    display: inline-block;
+    border-radius: 5px;
+    transition: all .2s;
+    background-color: #bab7b7;
+    color: white;
+}
+.my_button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.my_button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    background-color: #9f9d9d;
+}
+.my_button::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+    background-color: #bab7b7;
+    
+}
+.my_button:hover::after {
+    transform: scaleX(1.8) scaleY(2);
+    opacity: 0;
+}
+.my_button {
+    animation: moveInBottom 1s ease-out;
+    animation-fill-mode: backwards;
+}
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.greeting {
+    text-align: center;
+    animation: greeting 3s ease-out;
+    font-size: 22px;
+
+}
+
+.animat_greeting {
+   animation: greetingSmall 1s ease-out;
+}
+
+@keyframes greeting {
+    0% {
+        transform: scaleX(8) scaleY(8);
+
+    }
+
+    100% {
+        transform: scaleX(1) scaleY(1);
+    }
+}
+
+@keyframes greetingSmall {
+    0% {
+        transform: scaleX(1.5) scaleY(1.5);
+
+    }
+
+    100% {
+        transform: scaleX(1) scaleY(1);
+    }
+}
