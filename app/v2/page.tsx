@@ -7,8 +7,9 @@ import PortfolioManager from '@/components/controls/portfoliomanager'
 
 export default function V2() {
     const [wallets, setWallets] = useState<PrivateKeyAccount[]>([]);  
+    
     return (
-        <main className="flex min-h-screen flex-col ">
+        <main className="flex min-h-screen flex-col overflow-hidden">
             {wallets.length === 0
                 ? (<ImportWalletsDialog setWallets={setWallets} />)
                 : (<PortfolioManager wallets={wallets} />)}

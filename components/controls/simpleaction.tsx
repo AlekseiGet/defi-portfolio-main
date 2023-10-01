@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button"
 
 export default function SimpleAction({ name, subname, action, messageActions }: { name: string, subname: string | undefined, action: () => void, messageActions: string }) {
     const [styleActive, setStyleActive ] =useState("none")
-    console.log(name);
-    
 
     useEffect(()=>{
          messageActions == name ? 

@@ -48,10 +48,11 @@ import { Label } from '@radix-ui/react-label';
          selectBox
        );
 
+       //{value && <p className="text-amber-600 text-center pt-4 ">Выбрано: {value}</p>}
+
        return (
         <div style={{height: 80 } }>
           <div className="text-amber-600 text-center ">{result}</div>
-          {value && <p className="text-amber-600 text-center pt-4 ">Selected: {value}</p>}
         </div>    
        )
      };

@@ -1,3 +1,21 @@
+.disassemble-enter {
+    transform: translateX(-100vw);
+}
+
+.disassemble-enter-active {
+    transform: translateX(0px);
+   transition: all 500ms ease-in;
+}
+
+.disassemble-exit {
+    opacity: 1;
+}
+
+.disassemble-exit-active {
+    transform: translateX(100vw);
+    transition: all 500ms ease-in;
+}
+
 .fon_walletDialog{
     display: flex;
     flex-direction: column;
@@ -29,6 +47,19 @@
     color: rgb(62, 141, 230);
 }
 
+.timer_conteiner{
+
+}
+
+.dial_conteiner {
+   width: 200px;
+   height: 40px;
+   border-radius: 5px;
+   margin: auto;
+   padding: 5px;
+   background-color: #bab7b7;
+}
+
 @media (min-width: 1024px) {
     .fon_walletDialog{
        padding: 6rem;
@@ -52,7 +83,6 @@
 
 .my_button{
     position: relative;
-    text-transform: uppercase;
     text-decoration: none;
     padding: 5px 12px;
     display: inline-block;
@@ -60,6 +90,7 @@
     transition: all .2s;
     background-color: #bab7b7;
     color: white;
+    margin: 10px;
 }
 .my_button:hover {
     transform: translateY(-3px);
@@ -114,6 +145,8 @@
 .animat_greeting {
    animation: greetingSmall 1s ease-out;
 }
+
+
 
 @keyframes greeting {
     0% {

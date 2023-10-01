@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 export default function TransferAction({ name, subname, action, messageActions }: { name: string, subname: string | undefined, action: (value: string) => void, messageActions: string }) {
     const [value, setValue] = useState("");
     const [styleActive, setStyleActive ] =useState("none")
-    console.log(name);
+  
 
        useEffect(()=>{
          messageActions == name ? 

@@ -21,10 +21,13 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useState, ChangeEvent, useEffect} from "react";
+import { useState, ChangeEvent, useEffect, useMemo, useCallback, SetStateAction} from "react";
 import { Rock_3D } from "next/font/google";
 import cl from "../../css/Style.module.css"
 import Footer from "../ui/footer";
+import { Button } from "../ui/button";
+import ActionList from "../ui/ActionList";
+import RenderIntegration from "../ui/RenderIntegration";
 
 
 function BalanceMetrics({ name, value, decimal }: { name: string, value: bigint | undefined, decimal: number | undefined }) {
@@ -45,6 +48,7 @@ function BalanceMetrics({ name, value, decimal }: { name: string, value: bigint 
 }
 
 function renderIntegration(integration: IntegrationInfo<any>, index: number, wallet: PrivateKeyAccount, context: UiContext, messageActions : string ) {
+   
     if (integration.widget === "Transfer") {
         const ti = integration as IntegrationInfo<"Transfer">;
         return (
@@ -66,9 +70,9 @@ function renderIntegration(integration: IntegrationInfo<any>, index: number, wal
     return (<div key={index}>{integration.name} is not supported yet</div>)
 }
 
-const countries = ['EigenLayer', 'ZkSync ETH', 'ZkSync USDC', 'ArbitrumEth', 'OptimismEth', ' Libertas Omnibus'];
 
-export default function WalletCard(
+
+export default function WalletCard( 
 
     { wallet, selectedIntegrations, selectedMetrics, collectedMetrics }:
         {
@@ -78,43 +82,14 @@ export default function WalletCard(
             collectedMetrics: CollectedMetrics
         }) {
 
-     const options: SelectOption[] = [
-        { label: 'Select...', value: '' },
-        ...countries.map((country) => ({ label: country, value: country })),
-       ];
-   const [value, setValue] = useState('');
-   const [valueTo, setValueTo] = useState('');
-   const [messageActions, setMessageActions] = useState('Выбери что делаем');
-
-   useEffect(()=>{
-      value === "EigenLayer" && valueTo === "EigenLayer" ? setMessageActions("EigenLayer"):
-      !value && !valueTo ?  setMessageActions("Выбери что делаем") :
-      value && !valueTo ?  setMessageActions("Выбери куда") :
-      valueTo && !value ? setMessageActions("Выбери откуда") :
-      value === valueTo && value ? setMessageActions("Нет смысла"):
-      value === "ZkSync ETH" && valueTo === "ZkSync USDC" ? setMessageActions("ZkSync ETH -> USDC"):
-      value === "Libertas Omnibus" && valueTo === "ZkSync ETH" ? setMessageActions("Libertas Omnibus"):
-      value === "ArbitrumEth" && valueTo === "ZkSync ETH" ? setMessageActions("ArbitrumEth to ZkSync Era"):
-      value === "ZkSync ETH" && valueTo === "ArbitrumEth" ? setMessageActions("ZkSync Era to ArbitrumEth"):
-      value === "OptimismEth" && valueTo === "ArbitrumEth" ? setMessageActions("OptimismEth to Arbitrum Era"):
-      setMessageActions("Такого мы  ещё не делаем")
-   } ,[value, valueTo])
-   
-
-  const onChange = (event: ChangeEvent<HTMLSelectElement>) => { 
-    setValue(event.target.value);
-  };
-    const onChangeTo = (event: ChangeEvent<HTMLSelectElement>) => {
-    setValueTo(event.target.value);
-  };
-
     const [lastTransactions, setLastTransactions] = useState<TxInfo[]>([]);
+
+    
 
     const context: UiContext = {
         txAdder: (txInfo: TxInfo) => setLastTransactions([txInfo, ...lastTransactions]),
     };
-
-
+  
     return (
         <div className={cl.fon_walletcard} >
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-amber-600">
@@ -145,33 +120,8 @@ export default function WalletCard(
                             return (<BalanceMetrics name={`${chain.name} ${label}`} value={ balance } decimal={ decimal } key={`${chain.id}-${contractAddress}`} />)
                         })}
                     </div>
-
-                    <h4 className="text-center font-semibold pt-4">Actions</h4>
-                    <div className="border bg-primary rounded-xl grid gap-2 grid-cols-2" >
-                      <h5 className="text-amber-600 text-center" >Откуда</h5>
-                      <h5 className="text-amber-600 text-center"> куда </h5>
-                      <InputAction
-                         options={options}
-                         value={value}
-                         onChange={onChange}
-                     />
-                    
-      
-                       <InputAction
-                         options={options}
-                         value={valueTo}
-                         onChange={onChangeTo}
-                     />                 
-                   </div>
-                 <div className="border h-10 bg-primary rounded-xl text-amber-600 text-center">
-                    <h4>{messageActions}</h4>
-                 </div>
-
-    
-                    
-                    <div className="flex flex-col gap-2 ">
-                        {selectedIntegrations.map((integration, index) => renderIntegration( integration, index, wallet, context, messageActions))}
-                    </div>
+                    <h4 className="text-center font-semibold pt-4">Actions</h4>                    
+                    <ActionList  wallet={wallet}/>                 
                 </CardContent>
              </Card>
             </div>
