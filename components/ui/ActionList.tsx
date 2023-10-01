@@ -22,7 +22,7 @@ const ActionList = (props:{ wallet: PrivateKeyAccount} ) => {
             <CSSTransition
                key={index}
                timeout={500}
-               classNames="disassemble" >
+               classNames={disassemble} >
               <ActionItem  number={index } masActions={actions} backAction={backAction}  wallet= {props.wallet} />
             </CSSTransition>           
              )}
