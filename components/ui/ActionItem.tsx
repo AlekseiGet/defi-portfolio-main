@@ -5,6 +5,7 @@ import type { SelectOption } from "./inputAction";
 import RenderIntegration from './RenderIntegration';
 import { PrivateKeyAccount } from 'viem';
 import Timer from './Timer';
+import cl from "../../css/Style.module.css"
 
 const ActionItem = (props: { number:  number , masActions: any[], backAction:  (newState: any[]) => void,  wallet: PrivateKeyAccount}) => {
      
@@ -14,6 +15,8 @@ const ActionItem = (props: { number:  number , masActions: any[], backAction:  (
      const [messageActions, setMessageActions] = useState('Выбери что делаем');
      const [value, setValue] = useState('');
      const [valueTo, setValueTo] = useState('');
+     const [viewTimer, setViewTimer] = useState(false);
+     const [disassemble, setDisassemble] = useState(cl.disassemble_enter_active)
 
      useEffect(()=>{
       value === "EigenLayer" && valueTo === "EigenLayer" ? setMessageActions("EigenLayer"):
@@ -43,19 +46,22 @@ const ActionItem = (props: { number:  number , masActions: any[], backAction:  (
         ...countries.map((country) => ({ label: country, value: country })),
        ];   
     
-    const newActive = ()=> {  
-       
+    const newActive = ()=> {          
        return props.backAction([...props.masActions,numLastAction + 1 ])
      }
      const delActive = ()=> {  
-        if (props.masActions.length > 1) {
+        setDisassemble(cl.disassemble_exit_active)
+         setTimeout( ()=> {
+           if (props.masActions.length > 1) {
             props.masActions.splice(props.masActions.indexOf(props.number),1) 
             return  props.backAction([...props.masActions]) 
-        }          
+        }
+         } ,500)
+                 
      }
      
     return (
-      <div >
+      <div className={disassemble} >
         <div className="text-amber-600 text-center">{props.number} Actions </div>
         <div className="border bg-primary rounded-xl grid gap-2 grid-cols-2">
           <div>
@@ -76,8 +82,6 @@ const ActionItem = (props: { number:  number , masActions: any[], backAction:  (
           </div>
           <div>
             <h4 className="text-amber-600 text-center">{messageActions}</h4>
-            <h4 className="text-amber-600 text-center"> Отложить на время</h4>
-            <Timer/>
           </div>         
           <RenderIntegration wallet={props.wallet} messageActions={messageActions} />
           <div className="flex justify-between">      

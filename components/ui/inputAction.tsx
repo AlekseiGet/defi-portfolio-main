@@ -51,7 +51,7 @@ import { Label } from '@radix-ui/react-label';
        //{value && <p className="text-amber-600 text-center pt-4 ">Выбрано: {value}</p>}
 
        return (
-        <div style={{height: 80 } }>
+        <div className='mb-3 mt-10'>
           <div className="text-amber-600 text-center ">{result}</div>
         </div>    
        )

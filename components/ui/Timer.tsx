@@ -3,7 +3,7 @@ import { InputAction } from './inputAction';
 import type { SelectOption } from "./inputAction";
 import cl from "../../css/Style.module.css"
 
-const Timer = () => {
+const Timer = (props: {styles: string}) => {
     const [value, setValue] = useState('');
     const [min, setMin ] = useState(0)
     const countries = ['1 час', '1.5 часа', '2 часа', '12.5 час', '3 часа', ' 3.5 часа'];
@@ -31,7 +31,9 @@ const Timer = () => {
        }, 60000);   
 
     return (
-        <div className={cl.timer_conteiner}>
+      
+        <div style={ {display: props.styles } }  className={cl.timer_conteiner}>
+            <h4 className="text-amber-600 text-center"> Отложить на время</h4>
             <InputAction
                options={options}
                value={value}
@@ -41,8 +43,8 @@ const Timer = () => {
               <div className={cl.dial_conteiner}>
                Старт через: {min} мин.
               </div>
-
         </div>
+   
     );
 };
 

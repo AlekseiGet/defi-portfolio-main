@@ -98,7 +98,7 @@ export default function WalletCard(
           <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold  tracking-tight transition-colors first:mt-0 text-red-300">
               Wallet View
          </h2>
-        
+           
             <div className={cl.animat_greeting}>
               <Card className="opacity-90 max-w-5xl" style={{minHeight: '65vh'} }>
                 <CardHeader>
@@ -125,7 +125,7 @@ export default function WalletCard(
                 </CardContent>
              </Card>
             </div>
-
+ 
 
         <Footer/>
 

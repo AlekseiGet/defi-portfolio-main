@@ -40,7 +40,6 @@ const defaultIntegrations = [EigenLayer, LibertasOmnibusZkSyncEra, MuteIoZkSyncE
 export default function RenderIntegration(props: {  wallet: PrivateKeyAccount, messageActions: string}) {
 
     const [lastTransactions, setLastTransactions] = useState<TxInfo[]>([]);
-    const [messageActions, setMessageActions] = useState('Выбери что делаем');
     const [selectedIntegrations, setSelectedIntegrations] = useState<IntegrationInfo<any>[]>(defaultIntegrations);
 
     const context: UiContext = {

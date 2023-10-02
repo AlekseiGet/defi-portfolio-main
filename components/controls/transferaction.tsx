@@ -1,6 +1,7 @@
 import { useState, ChangeEvent,useEffect } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import Timer from "../ui/Timer";
 
 export default function TransferAction({ name, subname, action, messageActions }: { name: string, subname: string | undefined, action: (value: string) => void, messageActions: string }) {
     const [value, setValue] = useState("");
@@ -18,6 +19,7 @@ export default function TransferAction({ name, subname, action, messageActions }
     //style={{ display: "none" } }
     
     return (
+    <div> 
         <div className="flex flex-wrap items-baseline gap-1.5 p-6 bg-destructive rounded-xl" style={ {display: styleActive } } >
             <a className="grow">{name} {subname && (<span className="text-xs text-neutral-400">{subname}</span>)}</a>
             <Input className='w-24'
@@ -26,5 +28,7 @@ export default function TransferAction({ name, subname, action, messageActions }
             <Button variant={'mystyle'} onClick={() => setValue("MAX")}>Max</Button>
             <Button  disabled={value === ""} onClick={() => action(value)}>Run</Button>
         </div>
+        <Timer styles={styleActive} />
+     </div>
     )
 }

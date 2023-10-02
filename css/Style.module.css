@@ -1,17 +1,9 @@
-.disassemble-enter {
-    transform: translateX(-100vw);
+
+.disassemble_enter_active {
+    animation: departureFromTheLeft 1500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.disassemble-enter-active {
-    transform: translateX(0px);
-   transition: all 500ms ease-in;
-}
-
-.disassemble-exit {
-    opacity: 1;
-}
-
-.disassemble-exit-active {
+.disassemble_exit_active {
     transform: translateX(100vw);
     transition: all 500ms ease-in;
 }
@@ -48,14 +40,17 @@
 }
 
 .timer_conteiner{
-
+  padding-top: 30px;
+  background: rgba(255, 255, 255, 0.374);
+  display: flex;
+  justify-content: space-between
 }
 
 .dial_conteiner {
    width: 200px;
    height: 40px;
    border-radius: 5px;
-   margin: auto;
+   margin: 0px auto;
    padding: 5px;
    background-color: #bab7b7;
 }
@@ -81,6 +76,19 @@
     }
 }
 
+@keyframes departureFromTheLeft {
+    0% {
+        position: relative;
+            left: -100vw;
+
+    }
+
+    100% {
+        position: relative;
+        left: 0px;
+
+    }
+}
 .my_button{
     position: relative;
     text-decoration: none;
@@ -143,10 +151,8 @@
 }
 
 .animat_greeting {
-   animation: greetingSmall 1s ease-out;
+   animation: greetingSmall 1s ease-out; 
 }
-
-
 
 @keyframes greeting {
     0% {
