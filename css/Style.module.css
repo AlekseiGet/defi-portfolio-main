@@ -43,7 +43,8 @@
   padding-top: 30px;
   background: rgba(255, 255, 255, 0.374);
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
+  border-radius: 0.75rem;
 }
 
 .dial_conteiner {
@@ -62,6 +63,7 @@
     .fon_walletcard {
        padding: 6rem;
     }
+
 }
 
 @keyframes manifested {

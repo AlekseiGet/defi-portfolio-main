@@ -63,7 +63,7 @@ const ActionItem = (props: { number:  number , masActions: any[], backAction:  (
     return (
       <div className={disassemble} >
         <div className="text-amber-600 text-center">{props.number} Actions </div>
-        <div className="border bg-primary rounded-xl grid gap-2 grid-cols-2">
+        <div className="border bg-primary rounded-xl p-1 flex flex-row gap-2 flex-wrap justify-between">
           <div>
              <h5 className="text-amber-600 text-center" >Откуда</h5>
              <InputAction
