@@ -4,7 +4,6 @@ import { InputAction } from './inputAction';
 import type { SelectOption } from "./inputAction";
 import RenderIntegration from './RenderIntegration';
 import { PrivateKeyAccount } from 'viem';
-import Timer from './Timer';
 import cl from "../../css/Style.module.css"
 
 const ActionItem = (props: { number:  number , masActions: any[], backAction:  (newState: any[]) => void,  wallet: PrivateKeyAccount}) => {
@@ -15,7 +14,6 @@ const ActionItem = (props: { number:  number , masActions: any[], backAction:  (
      const [messageActions, setMessageActions] = useState('Выбери что делаем');
      const [value, setValue] = useState('');
      const [valueTo, setValueTo] = useState('');
-     const [viewTimer, setViewTimer] = useState(false);
      const [disassemble, setDisassemble] = useState(cl.disassemble_enter_active)
 
      useEffect(()=>{

@@ -27,6 +27,7 @@
 .fon_walletDialog{
     display: flex;
     flex-direction: column;
+    justify-content:space-around ;
     min-height: 100vh;
     padding: 0.25rem;
     background-image: url(../рages/Kron_Scene_man_reading_a_crystal_ball_inside_of_a_ball_money_an.png);
@@ -65,12 +66,17 @@
 }
 
 .dial_conteiner {
+   width: 100%;
+   
+}
+.dial_conteiner p{
+   text-align: center;
    width: 200px;
    height: 40px;
    border-radius: 5px;
    margin: 5px auto 0px;
    padding: 5px;
-   background-color: #bab7b7;
+   background-color: #ffffff;
 }
 
 @media (min-width: 1024px) {
