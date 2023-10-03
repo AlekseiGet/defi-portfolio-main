@@ -48,7 +48,7 @@ export default function RenderIntegration(props: {  wallet: PrivateKeyAccount, m
     
     return (     
               
-         <div className="flex flex-col gap-2 ">
+         <div className="flex flex-col ">
             {selectedIntegrations.map((integration, index) => renderIntegration( integration, index, props.wallet, context, props.messageActions))}
          </div> 
        

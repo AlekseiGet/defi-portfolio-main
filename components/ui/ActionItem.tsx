@@ -62,10 +62,10 @@ const ActionItem = (props: { number:  number , masActions: any[], backAction:  (
      
     return (
       <div className={disassemble} >
-        <div className="text-amber-600 text-center">{props.number} Actions </div>
-        <div className="border bg-primary rounded-xl p-1 flex flex-row gap-2 flex-wrap justify-between">
+        <div className="text-amber-600 text-center">{props.number} Action </div>
+        <div className={cl.disassemble_body}>
           <div>
-             <h5 className="text-amber-600 text-center" >Откуда</h5>
+             <h5 className="text-amber-600 text-center py-4 " >Откуда</h5>
              <InputAction
                options={options}
                value={value}
@@ -73,18 +73,19 @@ const ActionItem = (props: { number:  number , masActions: any[], backAction:  (
               />
           </div>          
           <div>
-              <h5 className="text-amber-600 text-center"> куда </h5>
+              <h5 className="text-amber-600 text-center py-4 "> куда </h5>
               <InputAction
                 options={options}
                 value={valueTo}
                 onChange={onChangeTo}
               /> 
           </div>
-          <div>
-            <h4 className="text-amber-600 text-center">{messageActions}</h4>
+          <div >
+            <h4 className="text-amber-600 text-center pt-4">{messageActions}</h4>
+            <RenderIntegration wallet={props.wallet} messageActions={messageActions} />       
           </div>         
-          <RenderIntegration wallet={props.wallet} messageActions={messageActions} />
-          <div className="flex justify-between">      
+          
+          <div className=" flex justify-between" style={{minWidth:'100%'}}>      
             <Button style={ props.masActions.length > 1 ? { width: 'fit-content' }:{display: 'none'} } variant={'mystyle'} onClick={delActive}> 
               Удалить
             </Button>  

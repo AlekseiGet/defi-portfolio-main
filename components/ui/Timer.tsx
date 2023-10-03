@@ -34,17 +34,18 @@ const Timer = (props: {styles: string}) => {
       
         <div style={ {display: props.styles } }  className={cl.timer_conteiner}>
           <div className="flex flex-row gap-2 flex-wrap justify-between">
-            <h4 className="text-amber-600 text-center"> Отложить на время</h4>
-            <InputAction
-               options={options}
+           <div className="flex flex-col">            
+               <h4 className="text-amber-600 text-center"> Отложить на время</h4>
+               <InputAction
+                  options={options}
                value={value}
-               onChange={onChange}
-              />
-
-              <div className={cl.dial_conteiner}>
+                  onChange={onChange}
+                />
+            </div>
+            <div className={cl.dial_conteiner}>
                Старт через: {min} мин.
-              </div>
-            </div>  
+            </div>
+           </div>  
         </div>
    
     );
