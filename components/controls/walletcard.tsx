@@ -47,31 +47,6 @@ function BalanceMetrics({ name, value, decimal }: { name: string, value: bigint 
     </>)
 }
 
-function renderIntegration(integration: IntegrationInfo<any>, index: number, wallet: PrivateKeyAccount, context: UiContext, messageActions : string ) {
-   
-    if (integration.widget === "Transfer") {
-        const ti = integration as IntegrationInfo<"Transfer">;
-        return (
-            <TransferAction name={ti.widgetArgs[0]}
-                subname={ti.widgetArgs[1]}
-                action={v => ti.handler(wallet, v, context)}
-                messageActions= { messageActions}
-            />)
-    }
-    if (integration.widget === "SimpleAction") {
-        const ti = integration as IntegrationInfo<"SimpleAction">;
-        return (
-            <SimpleAction name={ti.widgetArgs[0]}
-                subname={ti.widgetArgs[1]}
-                action={() => ti.handler(wallet, context)}
-                messageActions= { messageActions}
-            />)
-    }
-    return (<div key={index}>{integration.name} is not supported yet</div>)
-}
-
-
-
 export default function WalletCard( 
 
     { wallet, selectedIntegrations, selectedMetrics, collectedMetrics }:

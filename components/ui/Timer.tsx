@@ -3,11 +3,11 @@ import { InputAction } from './inputAction';
 import type { SelectOption } from "./inputAction";
 import cl from "../../css/Style.module.css"
 
-const Timer = (props: {styles: string}) => {
+const Timer = (props: {styles: string, backMin: (newState: boolean) => void, startTimer: boolean }) => {
     const [value, setValue] = useState('');
     const [indicator, setIndicator] = useState('#f5f2f2')
     const [min, setMin ] = useState(0)
-    const countries = ['1 час','2 часа','3 часа','4 часа','5 часов','6 часов','7 часов','8 часов','9 часов','10 часов'];
+    const countries = ['10 мин','20 мин','30 мин','40 мин','50 мин','60 мин','70 мин','80 мин','90 мин','100 мин'];
 
     useEffect(()=>{//хрень получилась
       var numEl = parseFloat(value)
@@ -15,18 +15,23 @@ const Timer = (props: {styles: string}) => {
          setMin(0)
       } else {
          let y = parseInt(numEl.toString().replace(/[^\d .]/g, '')) 
-         setMin(+y * 60)
+         setMin(+y)
      }     
     },[value])
 
-    if (min >=1 ) {
-      setTimeout(()=>{
-         setMin(min - 1)
-      console.log(min);
-      },60000)
-    }
+    useEffect(()=>{
+        min <=10 ? setIndicator('#ec515197'):
+        setIndicator('#f5f2f2')  
+        if (min===1) {
+          props.backMin(true)
+        } 
+    },[min] )
 
-       
+    if (props.startTimer) {
+      if (min >=1 ) {
+      setTimeout(()=>{
+         setMin(min - 1)    
+      },2000)}}
 
     const onChange = (event: ChangeEvent<HTMLSelectElement>) => { 
         setValue(event.target.value);
@@ -52,7 +57,7 @@ const Timer = (props: {styles: string}) => {
                 />
             </div>
             <div className={cl.dial_conteiner} >
-               <p>Старт через: {min} мин.</p>               
+               <p style={{backgroundColor: indicator }}>Старт через: {min} мин.</p>               
             </div>
            </div>  
         </div>

@@ -1,4 +1,4 @@
-import { useState, ChangeEvent,useEffect } from "react";
+import { useState, ChangeEvent,useEffect, useCallback } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Timer from "../ui/Timer";
@@ -6,7 +6,8 @@ import Timer from "../ui/Timer";
 export default function TransferAction({ name, subname, action, messageActions }: { name: string, subname: string | undefined, action: (value: string) => void, messageActions: string }) {
     const [value, setValue] = useState("");
     const [styleActive, setStyleActive ] =useState("none")
-  
+    const [delayedStart, setDelayedStart] = useState(false)
+    const [startTimer, setStartTimer] = useState(false)
 
        useEffect(()=>{
          messageActions == name ? 
@@ -14,8 +15,23 @@ export default function TransferAction({ name, subname, action, messageActions }
              setStyleActive("none")
        } ,[messageActions])
 
+       useEffect(()=>{
+         if (delayedStart) {
+            alert('Поехали') 
+            setStartTimer(!startTimer) 
+         }
+       } ,[delayedStart])
+
+       const run = ()=>{
+          setStartTimer(!startTimer) 
+       }
+
+       const backMin = useCallback((b: boolean)=> {      
+          return setDelayedStart(b);
+       },[])
+
     
- 
+ //()=> action(value)
     //style={{ display: "none" } }
     
     return (
@@ -26,9 +42,9 @@ export default function TransferAction({ name, subname, action, messageActions }
                 value={value}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)} />
             <Button variant={'mystyle'} onClick={() => setValue("MAX")}>Max</Button>
-            <Button  disabled={value === ""} onClick={() => action(value)}>Run</Button>
+            <Button  disabled={value === ""} onClick={run}>{startTimer ? "Pause" : 'Run'}  </Button>
         </div>
-        <Timer styles={styleActive} />
+        <Timer styles={styleActive} backMin={backMin} startTimer={startTimer} />
      </div>
     )
 }
