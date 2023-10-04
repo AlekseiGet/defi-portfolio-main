@@ -16,6 +16,8 @@ export default function SimpleAction({ name, subname, action, messageActions }: 
 
        useEffect(()=>{
          if (delayedStart) {
+            ()=> action()
+            setStartTimer(!startTimer)
             alert('Поехали') 
          }
        } ,[delayedStart])
@@ -24,10 +26,9 @@ export default function SimpleAction({ name, subname, action, messageActions }: 
           return setDelayedStart(b);
        },[])
 
-       //()=> action()
-
        const run = ()=>{
-          setStartTimer(!startTimer)  
+         setStartTimer(!startTimer)
+         setDelayedStart(false)  
        }
 
     return (

@@ -6,13 +6,13 @@ import cl from "../../css/Style.module.css"
 const Timer = (props: {styles: string, backMin: (newState: boolean) => void, startTimer: boolean }) => {
     const [value, setValue] = useState('');
     const [indicator, setIndicator] = useState('#f5f2f2')
-    const [min, setMin ] = useState(0)
+    const [min, setMin ] = useState(1)
     const countries = ['10 мин','20 мин','30 мин','40 мин','50 мин','60 мин','70 мин','80 мин','90 мин','100 мин'];
 
     useEffect(()=>{//хрень получилась
       var numEl = parseFloat(value)
       if (isNaN(numEl)) {
-         setMin(0)
+         setMin(1)
       } else {
         // let y = parseInt(numEl.toString().replace(/[^\d .]/g, '')) 
          setMin(numEl)
@@ -23,10 +23,12 @@ const Timer = (props: {styles: string, backMin: (newState: boolean) => void, sta
     useEffect(()=>{
         min <=10 ? setIndicator('#ec515197'):
         setIndicator('#f5f2f2')  
-        if (min===1) {
+        if (min===0) {
+          setValue('Прямо сейчас')
+          setMin(1)
           props.backMin(true)
         } 
-    },[min] )
+    },[min] ) 
 
     if (props.startTimer) {
       if (min >=1 ) {
@@ -52,6 +54,7 @@ const Timer = (props: {styles: string, backMin: (newState: boolean) => void, sta
             <div className="flex flex-col">            
                <h4 className="text-amber-600 text-center"> Отложить на время</h4>
                <InputAction
+                  disabled={props.startTimer}
                   options={options}
                   value={value}
                   onChange={onChange}
