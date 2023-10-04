@@ -14,9 +14,10 @@ const Timer = (props: {styles: string, backMin: (newState: boolean) => void, sta
       if (isNaN(numEl)) {
          setMin(0)
       } else {
-         let y = parseInt(numEl.toString().replace(/[^\d .]/g, '')) 
-         setMin(+y)
-     }     
+        // let y = parseInt(numEl.toString().replace(/[^\d .]/g, '')) 
+         setMin(numEl)
+     } 
+         
     },[value])
 
     useEffect(()=>{
