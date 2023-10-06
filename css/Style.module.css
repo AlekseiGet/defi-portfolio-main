@@ -78,6 +78,26 @@
    padding: 5px;
 }
 
+.history_conteiner{
+    width: 400px;
+    min-height: 100px;
+    background: #eef5ece7;
+    border-radius: 5px;
+    position: fixed;
+    top: 100px;
+    right: 50px;
+}
+
+.history_conteiner_box{
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));  
+}
+
+.history_conteiner_box span{
+    text-align: center;
+}
+
+
 @media (min-width: 1024px) {
     .fon_walletDialog{
        padding: 6rem;

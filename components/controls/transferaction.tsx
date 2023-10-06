@@ -1,16 +1,18 @@
-import { useState, ChangeEvent,useEffect, useCallback } from "react";
+import { useState, ChangeEvent,useEffect, useCallback, useContext   } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Timer from "../ui/Timer";
-import Done from "../ui/Done";
+import { HistoryUser } from "../ui/ActionList";
+
 
 export default function TransferAction({ name, subname, action, messageActions }: { name: string, subname: string | undefined, action: (value: string) => void, messageActions: string }) {
     const [value, setValue] = useState("");
     const [styleActive, setStyleActive ] =useState("none")
     const [delayedStart, setDelayedStart] = useState(false)
     const [startTimer, setStartTimer] = useState(false)
-    const [now, setNow] = useState('')
 
+    const userHistory = useContext(HistoryUser)
+   
        useEffect(()=>{
          messageActions == name ? 
              setStyleActive("flex"):
@@ -18,13 +20,12 @@ export default function TransferAction({ name, subname, action, messageActions }
        } ,[messageActions])
 
 
-
        useEffect(()=>{
          if (delayedStart) {
             ()=> action(value)
-            alert('Поехали') 
+        //    alert('Поехали') 
             setStartTimer(!startTimer)  
-            setNow(new Date().toLocaleTimeString())
+            userHistory.setUserHistiory([ ...userHistory.userHistory ,{value:value, name:name, subname:subname, now:new Date().toLocaleTimeString(), status: "false"}]);            
          }
        } ,[delayedStart])
 
@@ -36,9 +37,6 @@ export default function TransferAction({ name, subname, action, messageActions }
        const backMin = useCallback((b: boolean)=> {      
           return setDelayedStart(b);
        },[])
-  
-       
-       
        
     return (
     <div> 
@@ -50,9 +48,8 @@ export default function TransferAction({ name, subname, action, messageActions }
             <Button variant={'mystyle'} onClick={() => setValue("MAX")}>Max</Button>
             <Button  disabled={value === ""} onClick={run}>{startTimer ? "Pause" : 'Run'}  </Button>
         </div>
-        <Timer styles={styleActive} backMin={backMin} startTimer={startTimer} />
-        {delayedStart? <div><Done value={value} name={name} subname={subname} now={now} /></div>: <div></div> }
-         
+        <Timer styles={styleActive} backMin={backMin} startTimer={startTimer} />  
+           
      </div>
     )
 }

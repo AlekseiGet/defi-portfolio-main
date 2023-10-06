@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Done = (props: {value: string , name: string, subname: string  | undefined, now: string  | undefined}) => {
-    console.log(props.value);
-    console.log(props.name);
-    console.log(props.subname);
-    console.log(props.now);
+import cl from "../../css/Style.module.css"
 
-    //  console.log("The time is: \n"+now);
-    
-    return (
-        <div>
-            
-        </div>
+const Done = (props: { userHistory: { name: string | number | boolean | React.ReactPortal | React.PromiseLikeOfReactNode | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined; subname: string | number | boolean | React.ReactPortal | React.PromiseLikeOfReactNode | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined; value: string | number | boolean | React.ReactPortal | React.PromiseLikeOfReactNode | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined; now: string | number | boolean | React.ReactPortal | React.PromiseLikeOfReactNode | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined; status: string | number | boolean | React.ReactPortal | React.PromiseLikeOfReactNode | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined; }[]; }) => {  
+  const [hide, setHide ] = useState('0px')
+  const hiden =()=> {
+   hide=='0px'? setHide('360px'): setHide('0px')
+  }
+
+
+  return ( <div onClick={hiden} >
+          {props.userHistory.length>0 ? 
+            <div className={cl.history_conteiner} style={{transform: `translateX(${hide} )`, transition: 'all 500ms ease-in' }}>
+              <h1>История</h1>
+               {props.userHistory.map((h: { name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; subname: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; value: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; now: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; status: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; }, index: React.Key | null | undefined)=>
+                  <div className={cl.history_conteiner_box}  key={index} >
+                     <span style={{color: 'red'}} >{h.name} </span>  
+                     <span>{h.subname} </span> 
+                     <span>{h.value} </span> 
+                     <span>{h.now} </span> 
+                     <span> {h.status} </span>            
+                  </div> 
+               ) }
+           </div>
+          : <div></div>
+          }        
+       </div> 
     );
 };
 
