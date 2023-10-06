@@ -1,11 +1,14 @@
-import { useState, useCallback,useEffect  } from "react";
+import { useState, useCallback, useEffect, useContext  } from "react";
 import { Button } from "@/components/ui/button"
 import Timer from "../ui/Timer";
+import { HistoryUser } from "../ui/ActionList";
 
 export default function SimpleAction({ name, subname, action, messageActions }: { name: string, subname: string | undefined, action: () => void, messageActions: string }) {
     const [styleActive, setStyleActive ] =useState("none")
     const [delayedStart, setDelayedStart] = useState(false)
     const [startTimer, setStartTimer] = useState(false)
+
+    const userHistory = useContext(HistoryUser)
 
     useEffect(()=>{
          messageActions == name ? 
@@ -17,9 +20,11 @@ export default function SimpleAction({ name, subname, action, messageActions }: 
          if (delayedStart) {
             ()=> action()
             setStartTimer(!startTimer)
-            alert('Поехали') 
+            userHistory.setUserHistiory([ ...userHistory.userHistory ,{value:'...?', name:name, subname:subname, now:new Date().toLocaleTimeString(), status: "false"}]);  
          }
        } ,[delayedStart])
+
+       
 
        const backMin = useCallback((b: boolean)=> {      
           return setDelayedStart(b);

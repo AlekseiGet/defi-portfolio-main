@@ -1,4 +1,4 @@
-import { CollectedMetrics, IntegrationInfo, MetricsToDisplay, TxInfo, UiContext } from "@/lib/types";
+import { CollectedMetrics, IntegrationInfo, MetricsToDisplay, TxInfo } from "@/lib/types";
 import { PrivateKeyAccount } from "viem";
 import { getEtherWithPrecison } from "@/lib/utils";
 
@@ -53,16 +53,9 @@ export default function WalletCard(
             collectedMetrics: CollectedMetrics
         }) {
 
-    const [lastTransactions, setLastTransactions] = useState<TxInfo[]>([]);
-
-    
-
-    const context: UiContext = {
-        txAdder: (txInfo: TxInfo) => setLastTransactions([txInfo, ...lastTransactions]),
-    };
   
     return (
-        <div className={cl.fon_walletcard} >
+        <div >
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-amber-600">
              DeFi Portfolio
           </h1>

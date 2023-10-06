@@ -1,19 +1,21 @@
 import { useState } from "react";
-import { Chain, PrivateKeyAccount } from "viem";
+import { Chain} from "viem";
 import { CollectedMetrics, IntegrationInfo, MetricsToDisplay } from "@/lib/types";
 import { useEthereumBalances, useZkSyncEraBalances, useCustomBalances, useArbitrumEraBalances, useOptimismEraBalances } from "@/lib/balances";
 import WalletCard from "./walletcard";
-
+import { privateKeyToAccount, PrivateKeyAccount } from 'viem/accounts'
 import EigenLayer from "@/lib/integrations/eigenlayer";
 import LibertasOmnibusZkSyncEra from "@/lib/integrations/libertasOmnibusZkSyncEra";
 import { MuteIoZkSyncEthToUSDC } from "@/lib/integrations/muteio";
 import ArbitrumZkSyncEra from "@/lib/integrations/arbitrumToZkSync";
 import zkSyncToarbitrum from "@/lib/integrations/zkSyncToarbitrum";
 import OptimismArbitrum from "@/lib/integrations/OptimismArbitrum";
+import { Button } from "../ui/button";
+import cl from "../../css/Style.module.css"
 
 const defaultIntegrations = [EigenLayer, LibertasOmnibusZkSyncEra, MuteIoZkSyncEthToUSDC, ArbitrumZkSyncEra, zkSyncToarbitrum, OptimismArbitrum]
 
-export default function PortfolioManager({ wallets }: { wallets: PrivateKeyAccount[] }) {
+export default function PortfolioManager({ wallets, setWallets  }: { wallets: PrivateKeyAccount[], setWallets: ((wallets: PrivateKeyAccount[]) => void)  }) {
     const [integrations, setIntegrations] = useState<IntegrationInfo<any>[]>(defaultIntegrations);
 
     const allMetrics = integrations
@@ -49,7 +51,11 @@ export default function PortfolioManager({ wallets }: { wallets: PrivateKeyAccou
     })
     
     return (<>
-        {wallets.map((w, index) => {
+        <div className={cl.fon_walletcard}>
+          <Button style={{ width: 'fit-content' }} variant={'mystyle'} className="absolute p-6" onClick={
+                       () => setWallets([])
+                   }>Сброс</Button>
+           {wallets.map((w, index) => {
             const context: CollectedMetrics = {
                 mainnetEther: ethereumBalances && ethereumBalances[index],
                 zksyncEraEther: zkSyncEraBalances && zkSyncEraBalances[index],
@@ -59,7 +65,8 @@ export default function PortfolioManager({ wallets }: { wallets: PrivateKeyAccou
                 erc20Balances: erc20Balances[index],
             }
             return (<WalletCard wallet={w} key={w.address} selectedIntegrations={integrations} selectedMetrics={allMetrics} collectedMetrics={context} />);
-        })}
+           })}
+      </div>
     </>);
 }
 

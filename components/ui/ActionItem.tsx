@@ -8,27 +8,58 @@ import cl from "../../css/Style.module.css"
 
 const ActionItem = (props: { number:  number , masActions: any[], backAction:  (newState: any[]) => void,  wallet: PrivateKeyAccount}) => {
      
-    const countries = ['EigenLayer', 'ZkSync ETH', 'ZkSync USDC', 'ArbitrumEth', 'OptimismEth', ' Libertas Omnibus'];
+      const countries = ['ZkSync ETH -> USDC', 'ArbitrumEth to ZkSync Era', 'EigenLayer stETH', 'ZkSync Era to ArbitrumEth', 'OptimismEth to Arbitrum Era'];
+    const countriesSimpl = [ 'Libertas Omnibus -> ZkSync ETH' ];
 
 
-     const [messageActions, setMessageActions] = useState('Выбери что делаем');
+     const [messageActions, setMessageActions] = useState('Выбери действие');
+     const [value, setValue] = useState('Select...');
+     const [valueTo, setValueTo] = useState('Select...');
+     const [disassemble, setDisassemble] = useState(cl.disassemble_enter_active)
+
+     useEffect(()=>{
+      value === "ZkSync ETH -> USDC"? setMessageActions("ZkSync ETH -> USDC"):
+      value === "EigenLayer stETH"? setMessageActions("EigenLayer"):
+      valueTo === "Libertas Omnibus -> ZkSync ETH" ? setMessageActions("Libertas Omnibus"):
+      value === "ArbitrumEth to ZkSync Era"? setMessageActions("ArbitrumEth to ZkSync Era"):
+      value === "ZkSync Era to ArbitrumEth" ? setMessageActions("ZkSync Era to ArbitrumEth"):
+      value === "OptimismEth to Arbitrum Era"? setMessageActions("OptimismEth to Arbitrum Era"):
+      setMessageActions("Выбери действие")
+   } ,[value, valueTo]);
+
+    /**
+    *    const countries = ['ZkSync ETH -> USDC', 'ArbitrumEth to ZkSync Era', 'ZkSync Era to ArbitrumEth', 'OptimismEth to Arbitrum Era'];
+    const countriesSimpl = [ 'Libertas Omnibus -> ZkSync ETH', 'EigenLayer stETH' ];
+
+
+     const [messageActions, setMessageActions] = useState('Выбери действие');
      const [value, setValue] = useState('');
      const [valueTo, setValueTo] = useState('');
      const [disassemble, setDisassemble] = useState(cl.disassemble_enter_active)
 
      useEffect(()=>{
-      value === "EigenLayer" && valueTo === "EigenLayer" ? setMessageActions("EigenLayer"):
-      !value && !valueTo ?  setMessageActions("Выбери что делаем") :
-      value && !valueTo ?  setMessageActions("Выбери куда") :
-      valueTo && !value ? setMessageActions("Выбери откуда") :
-      value === valueTo && value ? setMessageActions("Нет смысла"):
-      value === "ZkSync ETH" && valueTo === "ZkSync USDC" ? setMessageActions("ZkSync ETH -> USDC"):
-      value === "Libertas Omnibus" && valueTo === "ZkSync ETH" ? setMessageActions("Libertas Omnibus"):
-      value === "ArbitrumEth" && valueTo === "ZkSync ETH" ? setMessageActions("ArbitrumEth to ZkSync Era"):
-      value === "ZkSync ETH" && valueTo === "ArbitrumEth" ? setMessageActions("ZkSync Era to ArbitrumEth"):
-      value === "OptimismEth" && valueTo === "ArbitrumEth" ? setMessageActions("OptimismEth to Arbitrum Era"):
-      setMessageActions("Такого мы  ещё не делаем")
+        if (valueTo === "EigenLayer stETH") {
+           setMessageActions("EigenLayer");
+            setValue('Select...')
+        } else if(value === "ZkSync ETH -> USDC") {
+           setMessageActions("ZkSync ETH -> USDC")
+        }else if(value === "ArbitrumEth to ZkSync Era") {
+
+        }else{}
+
+
+      valueTo === "EigenLayer stETH" ?{ setMessageActions("EigenLayer") setValue('Select...')}:
+
+      value === "ZkSync ETH -> USDC"? setMessageActions("ZkSync ETH -> USDC"):
+      
+      valueTo === "Libertas Omnibus -> ZkSync ETH" ? setMessageActions("Libertas Omnibus"):
+      value === "ArbitrumEth to ZkSync Era"? setMessageActions("ArbitrumEth to ZkSync Era"):
+      value === "ZkSync Era to ArbitrumEth" ? setMessageActions("ZkSync Era to ArbitrumEth"):
+      value === "OptimismEth to Arbitrum Era"? setMessageActions("OptimismEth to Arbitrum Era"):
+      setMessageActions("Выбери действие")
    } ,[value, valueTo]);
+    * 
+    */
 
     const numLastAction = props.masActions[props.masActions.length - 1]
 
@@ -40,9 +71,14 @@ const ActionItem = (props: { number:  number , masActions: any[], backAction:  (
   };
 
      const options: SelectOption[] = [
-        { label: 'Select...', value: '' },
+        { label: 'Select...', value: 'Select...' },
         ...countries.map((country) => ({ label: country, value: country })),
-       ];   
+       ];  
+       
+       const optionsSimpl: SelectOption[] = [
+        { label: 'Select...', value: 'Select...' },
+        ...countriesSimpl.map((country) => ({ label: country, value: country })),
+       ]; 
     
     const newActive = ()=> {          
        return props.backAction([...props.masActions,numLastAction + 1 ])
@@ -57,25 +93,25 @@ const ActionItem = (props: { number:  number , masActions: any[], backAction:  (
          } ,500)
                  
      }
-
-     
      
     return (
       <div className={disassemble} >
         <div className="text-amber-600 text-center">{props.number} Action </div>
         <div className={cl.disassemble_body}>
           <div>
-             <h5 className="text-amber-600 text-center py-4 " >Откуда</h5>
+             <h5 className="text-amber-600 text-center py-4 " >TransferAction</h5>
              <InputAction
+               disabled={valueTo==="Select..."? false: true }
                options={options}
                value={value}
                onChange={onChange}
               />
           </div>          
           <div>
-              <h5 className="text-amber-600 text-center py-4 "> куда </h5>
+              <h5 className="text-amber-600 text-center py-4 "> SimpleAction </h5>
               <InputAction
-                options={options}
+                disabled={value==="Select..."? false: true }
+                options={optionsSimpl}
                 value={valueTo}
                 onChange={onChangeTo}
               /> 

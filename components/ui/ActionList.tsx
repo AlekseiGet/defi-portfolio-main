@@ -18,12 +18,6 @@ const ActionList = (props:{ wallet: PrivateKeyAccount} ) => {
     }
    },[actions])
    
-   //{userHistory.length>1 ? <Done/> : <div ></div> } 
-
-   /**
-    * [{value:'Сумма', name:'Оператор', subname:'Инструмент', now: 'Дата', status: "Статус"}]
-    * 
-    */
 
     return (
       <HistoryUser.Provider value={{userHistory, setUserHistiory}} >

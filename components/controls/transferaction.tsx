@@ -19,7 +19,6 @@ export default function TransferAction({ name, subname, action, messageActions }
              setStyleActive("none")
        } ,[messageActions])
 
-
        useEffect(()=>{
          if (delayedStart) {
             ()=> action(value)

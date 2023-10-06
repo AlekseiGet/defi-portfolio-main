@@ -9,10 +9,10 @@ export default function V2() {
     const [wallets, setWallets] = useState<PrivateKeyAccount[]>([]);  
     
     return (
-        <main className="flex min-h-screen flex-col overflow-hidden">
+        <main className="flex min-h-screen flex-col overflow-hidden relative">
             {wallets.length === 0
                 ? (<ImportWalletsDialog setWallets={setWallets} />)
-                : (<PortfolioManager wallets={wallets} />)}
+                : (<PortfolioManager wallets={wallets} setWallets={setWallets} />)}
         </main>
     )
 }
