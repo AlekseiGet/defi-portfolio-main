@@ -50,6 +50,14 @@
     animation: manifested 6s ease-out;
 }
 
+.acquaintance_conteiner{
+    background-image: url(../рages/1b462377abcd1c3c45a6b.jpg );
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 50% 30%;
+}
+
 .footer_link a:hover {
     transform: scale(1.1) translateY(-3px);
     transition-duration: 0.3s;
@@ -95,6 +103,53 @@
 
 .history_conteiner_box span{
     text-align: center;
+}
+
+.indikator{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.help_conteiner{
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-image: url(../рages/1681098021_3-13.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 50% 30%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+}
+.help_conteiner div{
+    text-align: center;
+}
+
+.acquaintance_menu{
+   width: 250px;
+   position: absolute;
+   top: 20vh;
+   left: 20%;
+   right: 20%;
+   z-index: 1;
+   margin: auto;
+}
+.acquaintance_menu_mini{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: fixed;
+    top: 50px;
+    right: 10%;
+    overflow: hidden;
+    background-image: url(../рages/bestgaragedoorcompanyindallastexas-2.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
