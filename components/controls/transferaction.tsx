@@ -2,7 +2,7 @@ import { useState, ChangeEvent,useEffect, useCallback, useContext   } from "reac
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Timer from "../ui/Timer";
-import { HistoryUser } from "../ui/ActionList";
+import { useGlobalContext} from "../ui/ActionList";
 
 
 export default function TransferAction({ name, subname, action, messageActions }: { name: string, subname: string | undefined, action: (value: string) => void, messageActions: string }) {
@@ -10,8 +10,7 @@ export default function TransferAction({ name, subname, action, messageActions }
     const [styleActive, setStyleActive ] =useState("none")
     const [delayedStart, setDelayedStart] = useState(false)
     const [startTimer, setStartTimer] = useState(false)
-
-    const userHistory = useContext(HistoryUser)
+    const {userHistory , setUserHistiory } = useGlobalContext()
    
        useEffect(()=>{
          messageActions == name ? 
@@ -22,9 +21,8 @@ export default function TransferAction({ name, subname, action, messageActions }
        useEffect(()=>{
          if (delayedStart) {
             ()=> action(value)
-        //    alert('Поехали') 
             setStartTimer(!startTimer)  
-            userHistory.setUserHistiory([ ...userHistory.userHistory ,{value:value, name:name, subname:subname, now:new Date().toLocaleTimeString(), status: "false"}]);            
+            setUserHistiory([ ...userHistory ,{value:value, name:name, subname:subname, now:new Date().toLocaleTimeString(), status: "false"}]);            
          }
        } ,[delayedStart])
 

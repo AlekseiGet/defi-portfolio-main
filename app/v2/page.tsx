@@ -17,7 +17,6 @@ export default function V2() {
      
     return (
         <main className="flex min-h-screen flex-col overflow-hidden relative">
-
           <div style={{display: acquaintance? "none" : 'block' }} >
               <div className={cl.acquaintance_conteiner}>
                   <div className="flex items-center justify-center min-h-screen">

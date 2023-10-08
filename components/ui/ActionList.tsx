@@ -3,23 +3,28 @@ import ActionItem from './ActionItem';
 import { PrivateKeyAccount } from 'viem';
 import Done from './Done';
 
+export type GlobalContent = {
+  userHistory: any
+  setUserHistiory:(c: any) => void
+}
+export const HistoryUser = createContext<GlobalContent>({
+userHistory: {}, // set a default value
+setUserHistiory: () => {},
+})
+export const useGlobalContext = () => useContext(HistoryUser)
 
-export const HistoryUser = createContext({});
+//export const HistoryUser = createContext({});
 
 const ActionList = (props:{ wallet: PrivateKeyAccount} ) => {
-   const [userHistory , setUserHistiory ]= useState<HistoryUser>([])
-   const [actions, setActions] = useState([1])
-  //какой тип  ставить ? Свойство "setUserHistiory" не существует в типе "{}" вот а фак?
-
-  type HistoryUser = [ ]
- // userHistory: any[] , setUserHistiory: ((setUserHistiory: boolean) => void)
+  const [userHistory , setUserHistiory ]= useState<any[]>([{}])
+  const [actions, setActions] = useState([1])
  
-   const backAction = useCallback((m: any[])=> {
+  const backAction = useCallback((m: any[])=> {
     if (actions.length < 9) {
       setActions([...m])
     }
    },[actions])
-   
+      
     return (
       <HistoryUser.Provider value={{userHistory, setUserHistiory}} >
          <div className='overflow-hidden'> 

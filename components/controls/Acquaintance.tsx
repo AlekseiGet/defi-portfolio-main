@@ -21,8 +21,8 @@ const Acquaintance = ({acquaintance, hints, cristalTheme, lightTheme, setAcquain
        <div className={cl.acquaintance_mini}>
           <div className={miniMenu? cl.acquaintance_menu_mini :cl.acquaintance_menu} onClick={acquaintance? ()=> setMiniMenu(!miniMenu ): ()=> setMiniMenu(miniMenu ) }>
             <div className="rounded-xl border bg-card text-card-foreground shadow opacity-90 p-6 flex flex-col" >
-               <h1>{!acquaintance?' Давай познакомимся !':'Меню'} </h1>
-              <div style={{display:acquaintance? 'none' : 'block' }} className="flex items-baseline justify-between ">
+               <h1 className='pb-4' >{!acquaintance?' Давай познакомимся !':'Меню'} </h1>
+              <div style={{display:acquaintance? 'none' : 'flex' }} className="flex items-baseline justify-between ">
                   <Button style={{ width: 'fit-content' }} variant={'mystyle'} onClick={() => setAcquaintance(true)}  > Вход </Button>
                <div className={cl.indikator} ></div></div> 
               <div className="flex items-baseline justify-between ">
