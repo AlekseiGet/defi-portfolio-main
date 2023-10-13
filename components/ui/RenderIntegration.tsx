@@ -12,7 +12,7 @@ import ArbitrumZkSyncEra from "@/lib/integrations/arbitrumToZkSync";
 import zkSyncToarbitrum from "@/lib/integrations/zkSyncToarbitrum";
 import OptimismArbitrum from "@/lib/integrations/OptimismArbitrum";
 
-function renderIntegration(integration: IntegrationInfo<any>, index: number, wallet: PrivateKeyAccount, context: UiContext, messageActions : string ) {
+function renderIntegration(integration: IntegrationInfo<any>, index: number, wallet: PrivateKeyAccount, context: UiContext, messageActions : string, delayedStart: boolean, backSum: (newState: string) => void ) {
    
     if (integration.widget === "Transfer") {
         const ti = integration as IntegrationInfo<"Transfer">;
@@ -21,6 +21,8 @@ function renderIntegration(integration: IntegrationInfo<any>, index: number, wal
                 subname={ti.widgetArgs[1]}
                 action={v => ti.handler(wallet, v, context)}
                 messageActions= { messageActions}
+                delayedStart= {delayedStart}
+                backSum = {backSum}
             />)
     }
     if (integration.widget === "SimpleAction") {
@@ -30,6 +32,8 @@ function renderIntegration(integration: IntegrationInfo<any>, index: number, wal
                 subname={ti.widgetArgs[1]}
                 action={() => ti.handler(wallet, context)}
                 messageActions= { messageActions}
+                delayedStart= {delayedStart}
+                backSum = {backSum}
             />)
     }
     return (<div key={index}>{integration.name} is not supported yet</div>)
@@ -37,7 +41,7 @@ function renderIntegration(integration: IntegrationInfo<any>, index: number, wal
 
 const defaultIntegrations = [EigenLayer, LibertasOmnibusZkSyncEra, MuteIoZkSyncEthToUSDC, ArbitrumZkSyncEra, zkSyncToarbitrum, OptimismArbitrum]
 
-export default function RenderIntegration(props: {  wallet: PrivateKeyAccount, messageActions: string}) {
+export default function RenderIntegration(props: {  wallet: PrivateKeyAccount, messageActions: string, delayedStart: boolean, backSum: (newState: string) => void }) {
 
     const [lastTransactions, setLastTransactions] = useState<TxInfo[]>([]);
     const [selectedIntegrations, setSelectedIntegrations] = useState<IntegrationInfo<any>[]>(defaultIntegrations);
@@ -49,7 +53,7 @@ export default function RenderIntegration(props: {  wallet: PrivateKeyAccount, m
     return (     
               
          <div className="flex flex-col ">
-            {selectedIntegrations.map((integration, index) => renderIntegration( integration, index, props.wallet, context, props.messageActions))}
+            {selectedIntegrations.map((integration, index) => renderIntegration( integration, index, props.wallet, context, props.messageActions, props.delayedStart, props.backSum))}
          </div> 
        
     )

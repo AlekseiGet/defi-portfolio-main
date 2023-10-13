@@ -3,7 +3,7 @@ import { InputAction } from './inputAction';
 import type { SelectOption } from "./inputAction";
 import cl from "../../css/Style.module.css"
 
-const Timer = (props: {styles: string, backMin: (newState: boolean) => void, startTimer: boolean }) => {
+const Timer = (props: {styles: string, backMin: (newState: boolean, n:any) => void, startTimer: boolean, setStartTimer:((startTimer: boolean) => void)} ) => {
     const [value, setValue] = useState('');
     const [indicator, setIndicator] = useState('#f5f2f2')
     const [min, setMin ] = useState(1)
@@ -14,7 +14,6 @@ const Timer = (props: {styles: string, backMin: (newState: boolean) => void, sta
       if (isNaN(numEl)) {
          setMin(1)
       } else {
-        // let y = parseInt(numEl.toString().replace(/[^\d .]/g, '')) 
          setMin(numEl)
      } 
          
@@ -23,18 +22,22 @@ const Timer = (props: {styles: string, backMin: (newState: boolean) => void, sta
     useEffect(()=>{
         min <=10 ? setIndicator('#ec515197'):
         setIndicator('#f5f2f2')  
+        
         if (min===0) {
           setValue('Прямо сейчас')
           setMin(1)
-          props.backMin(true)
-        } 
+          props.setStartTimer(false) 
+          props.backMin(true, '0')
+        } else { 
+          props.backMin(false, min)
+        }
     },[min] ) 
 
     if (props.startTimer) {
       if (min >=1 ) {
       setTimeout(()=>{
-         setMin(min - 1)    
-      },2000)}}
+         setMin(min - 1)   
+      },2000)}}  //пока вместо минуты 2 секунды для наглядности
 
     const onChange = (event: ChangeEvent<HTMLSelectElement>) => { 
         setValue(event.target.value);
@@ -44,7 +47,6 @@ const Timer = (props: {styles: string, backMin: (newState: boolean) => void, sta
         { label: 'Прямо сейчас', value: '' },
         ...countries.map((country) => ({ label: country, value: country })),
        ]; 
-   
        
 
     return (

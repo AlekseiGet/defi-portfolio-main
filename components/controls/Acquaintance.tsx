@@ -4,6 +4,7 @@ import Link from 'next/link';
 import cl from "../../css/Style.module.css"
 import Help from '../pages/Help';
 
+
 const Acquaintance = ({acquaintance, hints, cristalTheme, lightTheme, setAcquaintance, setLightTheme, setCristalTheme, setHints  }: {acquaintance: boolean, hints: boolean, cristalTheme: boolean, lightTheme: boolean, setAcquaintance: ((acquaintance: boolean) => void),setLightTheme: ((lightTheme: boolean) => void), setCristalTheme: ((cristalTheme: boolean) => void), setHints: ((hints: boolean) => void) }) => {
 
     const [help ,setHelp ] = useState(false)
@@ -16,6 +17,8 @@ const Acquaintance = ({acquaintance, hints, cristalTheme, lightTheme, setAcquain
         setLightTheme(!lightTheme)
         setCristalTheme(!cristalTheme)
     }
+
+
 
     return ( 
        <div className={cl.acquaintance_mini}>

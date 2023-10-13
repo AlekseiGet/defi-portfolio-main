@@ -17,12 +17,16 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useState, ChangeEvent, useEffect, useMemo, useCallback, SetStateAction} from "react";
+import { useState, ChangeEvent, useEffect, useMemo, useCallback, SetStateAction, useContext, createContext } from "react";
 import { Rock_3D } from "next/font/google";
 import cl from "../../css/Style.module.css"
 import Footer from "../ui/footer";
 import { Button } from "../ui/button";
 import ActionList from "../ui/ActionList";
+import GasItem from "../pages/GasItem";
+import GasPrise from "./common/GasPrise";
+import Actions from "../pages/Activities/Actions";
+import Done from "../ui/Done";
 
 
 
@@ -43,6 +47,17 @@ function BalanceMetrics({ name, value, decimal }: { name: string, value: bigint 
     </>)
 }
 
+export type GlobalContent = {
+  userHistory: any
+  setUserHistiory:(c: any) => void
+}
+export const HistoryUser = createContext<GlobalContent>({
+userHistory: {}, // set a default value
+setUserHistiory: () => {},
+})
+export const useGlobalContext = () => useContext(HistoryUser)
+
+
 export default function WalletCard( 
 
     { wallet, selectedIntegrations, selectedMetrics, collectedMetrics }:
@@ -52,9 +67,12 @@ export default function WalletCard(
             selectedMetrics: MetricsToDisplay[],
             collectedMetrics: CollectedMetrics
         }) {
-
+     const [userHistory , setUserHistiory ]= useState<any[]>([{}])       
+  //<ActionList  wallet={wallet}/>  
   //scroll-margin: 5rem;
+  
     return (
+    <HistoryUser.Provider value={{userHistory, setUserHistiory}} >
         <div >
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-amber-600">
              DeFi Portfolio
@@ -84,8 +102,10 @@ export default function WalletCard(
                             return (<BalanceMetrics name={`${chain.name} ${label}`} value={ balance } decimal={ decimal } key={`${chain.id}-${contractAddress}`} />)
                         })}
                     </div>
+                    <GasPrise action={''} style={{}} />
+                    <Actions  wallet={wallet}/>
                     <h4 className="text-center font-semibold pt-4">Actions</h4>                    
-                    <ActionList  wallet={wallet}/>                 
+                    <Done userHistory={userHistory} />                
                 </CardContent>
              </Card>
             </div>
@@ -94,6 +114,6 @@ export default function WalletCard(
         <Footer/>
 
         </div>   
-       
+    </HistoryUser.Provider>
     )
 }

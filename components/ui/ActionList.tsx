@@ -13,7 +13,6 @@ setUserHistiory: () => {},
 })
 export const useGlobalContext = () => useContext(HistoryUser)
 
-//export const HistoryUser = createContext({});
 
 const ActionList = (props:{ wallet: PrivateKeyAccount} ) => {
   const [userHistory , setUserHistiory ]= useState<any[]>([{}])

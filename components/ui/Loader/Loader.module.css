@@ -1,0 +1,35 @@
+.loader {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 16px dotted rgb(33, 190, 80);
+    animation: rotate 3s infinite linear ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:8px auto ;
+}
+
+@keyframes rotate {
+    from {
+      transform:  rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+}
+
+.loader_text {
+    font-size: 19px;
+    animation: rotate_alt 3s infinite linear;
+}
+ 
+@keyframes rotate_alt {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-360deg);
+    }
+}

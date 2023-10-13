@@ -2,31 +2,38 @@ import { useState, ChangeEvent,useEffect, useCallback, useContext   } from "reac
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Timer from "../ui/Timer";
-import { useGlobalContext} from "../ui/ActionList";
+import { useGlobalContext} from "./walletcard";
 
 
-export default function TransferAction({ name, subname, action, messageActions }: { name: string, subname: string | undefined, action: (value: string) => void, messageActions: string }) {
+export default function TransferAction({ name, subname, action, messageActions, delayedStart, backSum }: { name: string, subname: string | undefined, action: (value: string) => void, messageActions: string, delayedStart: boolean, backSum: (newState: string) => void }) {
     const [value, setValue] = useState("");
     const [styleActive, setStyleActive ] =useState("none")
-    const [delayedStart, setDelayedStart] = useState(false)
+   // const [delayedStart, setDelayedStart] = useState(false)
     const [startTimer, setStartTimer] = useState(false)
     const {userHistory , setUserHistiory } = useGlobalContext()
    
        useEffect(()=>{
-         messageActions == name ? 
-             setStyleActive("flex"):
-             setStyleActive("none")
+         messageActions == name 
+         ? setStyleActive("flex")
+         :setStyleActive("none")
+             
        } ,[messageActions])
 
        useEffect(()=>{
-         if (delayedStart) {
+         if (delayedStart && messageActions === name) {
+          //  console.log('run' +'; '+ delayedStart +'; '+ messageActions +'; '+ name);           
             ()=> action(value)
             setStartTimer(!startTimer)  
             setUserHistiory([ ...userHistory ,{value:value, name:name, subname:subname, now:new Date().toLocaleTimeString(), status: "false"}]);            
          }
        } ,[delayedStart])
 
-       const run = ()=>{
+       useEffect(()=>{
+         backSum (value)
+       } ,[value]);
+
+       /**
+        * const run = ()=>{
           setStartTimer(!startTimer) 
           setDelayedStart(false)
        }
@@ -34,6 +41,11 @@ export default function TransferAction({ name, subname, action, messageActions }
        const backMin = useCallback((b: boolean)=> {      
           return setDelayedStart(b);
        },[])
+        */
+       
+
+       //<Timer styles={styleActive} backMin={backMin} startTimer={startTimer} setStartTimer={setStartTimer}/> 
+       //<Button  disabled={value === ""} onClick={run}>{startTimer ? "Pause" : 'Run'}  </Button>
        
     return (
     <div> 
@@ -43,9 +55,9 @@ export default function TransferAction({ name, subname, action, messageActions }
                 value={value}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)} />
             <Button variant={'mystyle'} onClick={() => setValue("MAX")}>Max</Button>
-            <Button  disabled={value === ""} onClick={run}>{startTimer ? "Pause" : 'Run'}  </Button>
+            
         </div>
-        <Timer styles={styleActive} backMin={backMin} startTimer={startTimer} />  
+         
            
      </div>
     )
