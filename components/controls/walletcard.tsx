@@ -68,8 +68,7 @@ export default function WalletCard(
             collectedMetrics: CollectedMetrics
         }) {
      const [userHistory , setUserHistiory ]= useState<any[]>([{}])       
-  //<ActionList  wallet={wallet}/>  
-  //scroll-margin: 5rem;
+ 
   
     return (
     <HistoryUser.Provider value={{userHistory, setUserHistiory}} >

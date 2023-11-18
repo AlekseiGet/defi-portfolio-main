@@ -5,16 +5,18 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import Footer from '../ui/footer';
+import {useGlobalContext } from "../../app/v2/page"
 
 
 export default function ImportWalletsDialog({ setWallets }: { setWallets: ((wallets: PrivateKeyAccount[]) => void) }) {
     const [keys, setKeys] = useState("")
+    const {lightTheme, cristalTheme, hints} = useGlobalContext()
     const getKeys = () => {
         return (keys.match(/[0-9A-Fa-f]{64}/g) || []).map(k => privateKeyToAccount(`0x${k}`));
     };
 
     return (
-        <div className={cl.fon_walletDialog} >
+        <div className={cl.fon_walletDialog} style={{ backgroundImage: cristalTheme? "var(--primary-cristal)":  "var(--primary-light)"}} >
             <div className={cl.greeting}> <h1 className='text-slate-300 text-4xl text-center pt-4'>Defi Crystal</h1> </div>
              <div className="grid w-full gap-1.5">
                <Label className='text-slate-300' htmlFor="pk-input ">Please, enter your private keys:</Label>

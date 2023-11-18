@@ -12,11 +12,20 @@ import zkSyncToarbitrum from "@/lib/integrations/zkSyncToarbitrum";
 import OptimismArbitrum from "@/lib/integrations/OptimismArbitrum";
 import { Button } from "../ui/button";
 import cl from "../../css/Style.module.css"
+import {useGlobalContext } from "../../app/v2/page"
 
 const defaultIntegrations = [EigenLayer, LibertasOmnibusZkSyncEra, MuteIoZkSyncEthToUSDC, ArbitrumZkSyncEra, zkSyncToarbitrum, OptimismArbitrum]
 
 export default function PortfolioManager({ wallets, setWallets  }: { wallets: PrivateKeyAccount[], setWallets: ((wallets: PrivateKeyAccount[]) => void)  }) {
     const [integrations, setIntegrations] = useState<IntegrationInfo<any>[]>(defaultIntegrations);
+
+    const {lightTheme, cristalTheme, hints} = useGlobalContext() 
+
+    console.log(lightTheme);
+    console.log(cristalTheme);
+    console.log(hints);
+    
+
 
     const allMetrics = integrations
         .flatMap(i => i.metrics)
@@ -51,7 +60,7 @@ export default function PortfolioManager({ wallets, setWallets  }: { wallets: Pr
     })
     
     return (<>
-        <div className={cl.fon_walletcard}>
+        <div className={cl.fon_walletcard} style={{backgroundImage: cristalTheme? "var(--primary-cristal)":  "var(--primary-light)"}}>
           <Button style={{ width: 'fit-content' }} variant={'mystyle'} className="absolute p-6" onClick={
                        () => setWallets([])
                    }>Сброс</Button>

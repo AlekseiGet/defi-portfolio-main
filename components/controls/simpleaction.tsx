@@ -33,21 +33,6 @@ export default function SimpleAction({ name, subname, action, messageActions, de
        
 
 
-       /**
-        * const backMin = useCallback((b: boolean)=> {      
-          return setDelayedStart(b);
-       },[])
-
-       const run = ()=>{
-         setStartTimer(!startTimer)
-         setDelayedStart(false)  
-       }
-        */
-       
-
-       //<Timer styles={styleActive} backMin={backMin} startTimer={startTimer} setStartTimer={setStartTimer}/>
-        //<Button onClick={run}>Run</Button>
-
 
     return (
         <div>
