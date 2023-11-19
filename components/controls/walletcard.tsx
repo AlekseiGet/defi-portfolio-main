@@ -97,10 +97,7 @@ export default function WalletCard(
                     {cristalTheme?
                     <Actions  wallet={wallet}/>
                     :<></>
-                    }
-                    
-
-                                       
+                    }                      
                     <Done />                
                 </CardContent>
              </Card>

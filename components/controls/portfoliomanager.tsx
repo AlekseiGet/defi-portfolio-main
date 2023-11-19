@@ -20,10 +20,6 @@ export default function PortfolioManager({ wallets, setWallets  }: { wallets: Pr
     const [integrations, setIntegrations] = useState<IntegrationInfo<any>[]>(defaultIntegrations);
 
     const {lightTheme, cristalTheme, hints} = useGlobalContext() 
-
-    console.log(lightTheme);
-    console.log(cristalTheme);
-    console.log(hints);
     
 
 

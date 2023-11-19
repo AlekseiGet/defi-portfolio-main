@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEvent } from 'react';
+import React, { useState, useCallback, ChangeEvent, useEffect, Children } from 'react';
 import { PrivateKeyAccount } from 'viem';
 import cl from './Actions.module.css'
 import Timer from '@/components/ui/Timer';
@@ -7,28 +7,72 @@ import { InputAction, type SelectOption } from "../../ui/inputAction";
 import ActionItem from '@/components/ui/ActionItem';
 import RenderIntegration from '@/components/ui/RenderIntegration';
 import { Button } from '@/components/ui/button';
+import {useGlobalContext } from "../../../app/v2/page"
 
 const Actions = (props:{ wallet: PrivateKeyAccount} ) => {
-
-     const countries = ['ZkSync ETH -> USDC','EigenLayer', 'Libertas Omnibus', "ArbitrumEth to ZkSync Era", "ZkSync Era to ArbitrumEth", 'OptimismEth to Arbitrum Era' ];
+    const {userHistory , setUserHistiory } = useGlobalContext()
+    const countries = ['ZkSync ETH -> USDC','EigenLayer', 'Libertas Omnibus', "ArbitrumEth to ZkSync Era", "ZkSync Era to ArbitrumEth", 'OptimismEth to Arbitrum Era' ];
 
     const [delayedStart, setDelayedStart] = useState(false) //  дошол таймер до 0
     const [startTimer, setStartTimer] = useState(false) //запуск таймера
-    const [action, setAction] = useState("optimism") // в какой сети опрашивать Газ
+    const [action, setAction] = useState("не выбрано") // в какой сети опрашивать Газ
     const [watch, setWatch] = useState(0) // часы для отсчёта
     const [value, setValue] = useState('___'); // для инпута
     const [sum, setSum] = useState('___') //сумма
+    const [keys, setKey] = useState<number>(1) //по нему буду потом искать
+    const [status, setStatus] = useState("нет данных")
 
     //Вкладки открыты или нет
     const [newActions, setNewActions] = useState(false)
     const [timer, setTimer] = useState(false)
     const [gasLimit, setGasLimit] = useState(false)
+    const [userLimit, setUserLimit] = useState(0.25)
     const [simple, setSimple] = useState(false) 
     const [info, setInfo] = useState(false)
- 
+
+    useEffect(()=>{
+
+    if (value==='ZkSync ETH -> USDC') {
+        setAction("zksync")
+        }else if (value==='EigenLayer') {
+        setAction("eth")
+        }else if (value==='Libertas Omnibus') {
+        setAction("avax")
+        }else if (value==='ArbitrumEth to ZkSync Era') {
+        setAction("zksync")
+        }else if (value==='ZkSync Era to ArbitrumEth') {
+        setAction("arbitrum")
+        }else if (value==='OptimismEth to Arbitrum Era') {
+        setAction("optimism")
+        }else{
+        setAction("не выбрано")
+        }
+    setStatus("нет данных") 
+        
+      },[value] )
+
+      useEffect(()=>{ //Найти по ключу и узнать и подписать статус
+        if (userHistory.length >1 ) {
+            let result = userHistory.findIndex((item: { keys: number; }) => item.keys === keys);
+            if (userHistory[result] !=undefined) {
+                setStatus(userHistory[result].status)
+            }   
+        }             
+          },[userHistory.length] )
+    
+     
+
+     const handleChange = (event:any) => {
+        if (isNaN(event.target.value)) {
+            setUserLimit(0)
+        } else {
+            setUserLimit(event.target.value);           
+        }
+     }
 
        const backMin = useCallback((b: boolean, n: any  )=> { // Timer запускается каждый раз заново
-          setWatch(n)          
+          setWatch(n)  
+          setStatus("нет данных")        
           return setDelayedStart(b);
        },[])
 
@@ -46,9 +90,9 @@ const Actions = (props:{ wallet: PrivateKeyAccount} ) => {
        };
        const run = ()=>{
          setStartTimer(!startTimer) 
-         setDelayedStart(false)   
+         setDelayedStart(false) 
+         setKey(Number(new Date()))  
        }
-
  
 
     return (
@@ -73,9 +117,17 @@ const Actions = (props:{ wallet: PrivateKeyAccount} ) => {
                             <div className={cl.action_title_limit}>
                                 Gas limit
                             </div>
+                                               
                             <div onClick={(e) => e.stopPropagation()}>
                                 {gasLimit 
-                                  ? <GasPrise action={action} style={{height:"200px", color: 'white'  }}/>
+                                  ? <>
+                                    <h2 className=' text-primary-foreground' >Gas не больше чем: {Number(userLimit)} $</h2>                               
+                                     <input
+                                       type="tel"
+                                       value={userLimit}
+                                       onChange={handleChange} />  
+                                     <GasPrise action={action} style={{height:"200px", color: 'white'  }}/>
+                                  </> 
                                   : <p></p>
                                 }                               
                              </div> 
@@ -91,7 +143,7 @@ const Actions = (props:{ wallet: PrivateKeyAccount} ) => {
                                    value={value}
                                    onChange={onChange}
                                 />
-                                 <RenderIntegration wallet={props.wallet} messageActions={value} delayedStart={delayedStart} backSum={backSum} />                               
+                                 <RenderIntegration  wallet={props.wallet} messageActions={value} delayedStart={delayedStart} backSum={backSum} keys={keys}/>                               
                              </div>
                         </div>
                         
@@ -105,8 +157,8 @@ const Actions = (props:{ wallet: PrivateKeyAccount} ) => {
                                        <h1>Выбрано действие : {value}</h1>
                                        <h2>Сумма перевода : {sum} </h2>
                                        <h2>Задержка старта : {watch} min</h2> 
-                                       <h2>Лимит Gas:___ </h2>
-                                       <h2>Статус:___ </h2>
+                                       <h2>Лимит Gas: { Number(userLimit)} $ </h2>
+                                       <h2>Статус:{status} </h2>
                                      </div>
                                   : <p></p>
                                 }                               

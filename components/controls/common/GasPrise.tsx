@@ -33,13 +33,14 @@ const gasList = ["arbitrum", "optimism", "eth","zksync", "avax", "bsc", "harmony
 const GasPrise = (props:{action: string, style: {}}) => {
 
     const [masGas, setMasGas] = useState<any[]>([])
-    const [ r, setR] = useState({ height:"200px", color: 'white'   })
+   
 
     useEffect(()=>{
         props.action.length>0
         ?setMasGas([props.action ])
         :setMasGas(gasList)
     },[])
+    
 
     
     return (

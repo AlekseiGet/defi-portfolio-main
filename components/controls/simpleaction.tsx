@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import Timer from "../ui/Timer";
 import { useGlobalContext } from "../../app/v2/page";
 
-export default function SimpleAction({ name, subname, action, messageActions, delayedStart, backSum }: { name: string, subname: string | undefined, action: () => void, messageActions: string, delayedStart: boolean, backSum: (newState: string) => void }) {
+export default function SimpleAction({ name, subname, action, messageActions, delayedStart, backSum, keys }: { name: string, subname: string | undefined, action: () => void, messageActions: string, delayedStart: boolean, backSum: (newState: string) => void, keys: number }) {
     const [styleActive, setStyleActive ] =useState("none")
     const [value, setValue] = useState("");
     const [startTimer, setStartTimer] = useState(false)
@@ -23,7 +23,7 @@ export default function SimpleAction({ name, subname, action, messageActions, de
            // console.log('run' +'; '+ delayedStart +'; '+ messageActions +'; '+ name);
             ()=> action()
             setStartTimer(!startTimer)
-            setUserHistiory([ ...userHistory ,{value:'...?', name:name, subname:subname, now:new Date().toLocaleTimeString(), status: "false"}]);  
+            setUserHistiory([ ...userHistory ,{value:'...?', name:name, subname:subname, now:new Date().toLocaleTimeString(), status: "false", keys:keys}]);  
          }
        } ,[delayedStart])
 

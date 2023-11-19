@@ -5,7 +5,7 @@ import Timer from "../ui/Timer";
 import { useGlobalContext} from "../../app/v2/page";
 
 
-export default function TransferAction({ name, subname, action, messageActions, delayedStart, backSum }: { name: string, subname: string | undefined, action: (value: string) => void, messageActions: string, delayedStart: boolean, backSum: (newState: string) => void }) {
+export default function TransferAction({ name, subname, action, messageActions, delayedStart, backSum, keys }: { name: string, subname: string | undefined, action: (value: string) => void, messageActions: string, delayedStart: boolean, backSum: (newState: string) => void, keys: number }) {
     const [value, setValue] = useState("");
     const [styleActive, setStyleActive ] =useState("none")
    // const [delayedStart, setDelayedStart] = useState(false)
@@ -24,7 +24,7 @@ export default function TransferAction({ name, subname, action, messageActions, 
           //  console.log('run' +'; '+ delayedStart +'; '+ messageActions +'; '+ name);           
             ()=> action(value)
             setStartTimer(!startTimer)  
-            setUserHistiory([ ...userHistory ,{value:value, name:name, subname:subname, now:new Date().toLocaleTimeString(), status: "false"}]);            
+            setUserHistiory([ ...userHistory ,{value:value, name:name, subname:subname, now:new Date().toLocaleTimeString(), status: "false", keys:keys}]);            
          }
        } ,[delayedStart])
 
