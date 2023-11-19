@@ -11,11 +11,15 @@ export type GlobalContent = {
   lightTheme: boolean
   cristalTheme: boolean
   hints: boolean 
+  userHistory: {}
+  setUserHistiory:(c: any) => void
 }
 export const HistoryUser = createContext<GlobalContent>({
   lightTheme: false,
   cristalTheme: true,
-  hints: false
+  hints: false,
+  userHistory: {}, // set a default value
+  setUserHistiory: () => {},
 })
 export const useGlobalContext = () => useContext(HistoryUser)
 
@@ -25,10 +29,11 @@ export default function V2() {
     const [hints ,setHints ] = useState(false)
     const [cristalTheme ,setCristalTheme ] = useState(true)
     const [lightTheme ,setLightTheme ] = useState(false)
+    const [userHistory , setUserHistiory ]= useState<any[]>([{}]) 
    
     return (
       <HistoryUser.Provider 
-         value={{lightTheme, cristalTheme, hints}}
+         value={{lightTheme, cristalTheme, hints, userHistory, setUserHistiory}}
       >
         <main className="flex min-h-screen flex-col overflow-hidden relative">
           <div style={{display: acquaintance? "none" : 'block' }} >

@@ -27,7 +27,7 @@ import GasItem from "../pages/GasItem";
 import GasPrise from "./common/GasPrise";
 import Actions from "../pages/Activities/Actions";
 import Done from "../ui/Done";
-
+import {useGlobalContext } from "../../app/v2/page"
 
 
 function BalanceMetrics({ name, value, decimal }: { name: string, value: bigint | undefined, decimal: number | undefined }) {
@@ -47,15 +47,7 @@ function BalanceMetrics({ name, value, decimal }: { name: string, value: bigint 
     </>)
 }
 
-export type GlobalContent = {
-  userHistory: any
-  setUserHistiory:(c: any) => void
-}
-export const HistoryUser = createContext<GlobalContent>({
-userHistory: {}, // set a default value
-setUserHistiory: () => {},
-})
-export const useGlobalContext = () => useContext(HistoryUser)
+
 
 
 export default function WalletCard( 
@@ -66,12 +58,11 @@ export default function WalletCard(
             selectedIntegrations: IntegrationInfo<any>[],
             selectedMetrics: MetricsToDisplay[],
             collectedMetrics: CollectedMetrics
-        }) {
-     const [userHistory , setUserHistiory ]= useState<any[]>([{}])       
- 
+        }) {      
+            const {lightTheme, cristalTheme, hints} = useGlobalContext()
   
     return (
-    <HistoryUser.Provider value={{userHistory, setUserHistiory}} >
+   
         <div >
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-amber-600">
              DeFi Portfolio
@@ -102,9 +93,15 @@ export default function WalletCard(
                         })}
                     </div>
                     <GasPrise action={''} style={{}} />
+                    <h4 className="text-center font-semibold pt-4">Actions</h4> 
+                    {cristalTheme?
                     <Actions  wallet={wallet}/>
-                    <h4 className="text-center font-semibold pt-4">Actions</h4>                    
-                    <Done userHistory={userHistory} />                
+                    :<></>
+                    }
+                    
+
+                                       
+                    <Done />                
                 </CardContent>
              </Card>
             </div>
@@ -113,6 +110,6 @@ export default function WalletCard(
         <Footer/>
 
         </div>   
-    </HistoryUser.Provider>
+   
     )
 }

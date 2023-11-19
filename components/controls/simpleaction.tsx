@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useContext  } from "react";
 import { Button } from "@/components/ui/button"
 import Timer from "../ui/Timer";
-import { useGlobalContext } from "./walletcard";
+import { useGlobalContext } from "../../app/v2/page";
 
 export default function SimpleAction({ name, subname, action, messageActions, delayedStart, backSum }: { name: string, subname: string | undefined, action: () => void, messageActions: string, delayedStart: boolean, backSum: (newState: string) => void }) {
     const [styleActive, setStyleActive ] =useState("none")

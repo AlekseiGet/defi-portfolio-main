@@ -2,7 +2,7 @@ import { useState, ChangeEvent,useEffect, useCallback, useContext   } from "reac
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Timer from "../ui/Timer";
-import { useGlobalContext} from "./walletcard";
+import { useGlobalContext} from "../../app/v2/page";
 
 
 export default function TransferAction({ name, subname, action, messageActions, delayedStart, backSum }: { name: string, subname: string | undefined, action: (value: string) => void, messageActions: string, delayedStart: boolean, backSum: (newState: string) => void }) {
